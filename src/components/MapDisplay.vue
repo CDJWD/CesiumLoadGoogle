@@ -4,6 +4,7 @@
         <CoordinateDisplay :coordinate=mouseCoordinate />
         <LayerControl :layerSet="layerSet" @selectChange="layerSelectChangeHandle" @jump="layerJumpHandle" />
         <ContactInformation />
+        <LocalSearch :Viewer="cesiumViewer" />
         <FloatingToolbar :tools="tools" @selected="toolSelectHandle"></FloatingToolbar>
     </div>
 </template>
@@ -18,6 +19,7 @@ import ContactInformation from './ContactInformation.vue';
 import FloatingToolbar from './FloatingToolbar.vue';
 import { PolygonDrawer, PolylineDrawer } from '@/js/cesiumMeasure';
 import GCMercatorTilingScheme from '@/js/GCMercatorTilingScheme';
+import LocalSearch from './localSearch.vue';
 
 export default {
     name: "MapDisplay",
@@ -25,7 +27,7 @@ export default {
     data() {
         return {
             cesiumViewer: undefined,
-            layerSet:[],
+            layerSet: [],
             mouseCoordinate: {
                 lat: null,
                 lon: null,
@@ -57,6 +59,7 @@ export default {
     components: {
         CoordinateDisplay,
         LayerControl,
+        LocalSearch ,
         ContactInformation,
         FloatingToolbar
     },
@@ -136,12 +139,14 @@ export default {
         addLayer() {
             for (let index = 0; index < this.layerSet.length; index++) {
                 let element = this.layerSet[index];
-                if (element.type === 1) {
-                    this.addMapboxTitle(element)
-                } else if (element.type === 2) {
-                    this.add3DLayer(element)
-                } else if (element.type === 3) {
-                    this.addGodeMap(element)
+                if (!element.hidden) {
+                    if (element.type === 1) {
+                        this.addMapboxTitle(element)
+                    } else if (element.type === 2) {
+                        this.add3DLayer(element)
+                    } else if (element.type === 3) {
+                        this.addGodeMap(element)
+                    }
                 }
             }
         },

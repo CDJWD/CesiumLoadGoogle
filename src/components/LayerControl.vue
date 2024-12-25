@@ -1,9 +1,10 @@
 <template>
     <div id="layerControl" :style="{ width: isCollapsed ? '30px' : '250px' }">
         <div class="head">
-            <img class="img" :style="rotateStyle" @click="collapse" src="/layer_expand.png">
+          图层列表：  <img class="img" :style="rotateStyle" @click="collapse" src="/layer_expand.png">
         </div>
-        <div v-for="(item, index) in layerSet" :key="item.name" class="layerItem" v-show="isChildrenVisible">
+        <div v-for="(item, index) in layerSet" :key="item.name" 
+         class="layerItem" v-show="!item.hidden & isChildrenVisible">
             <img v-if="item.state" class="selectedImg" @click="layerSelectChange(index, false)" src="/layer_selected.png">
             <img v-if="!item.state" class="selectedImg" @click="layerSelectChange(index, true)" src="/layer_check_box.png">
             <div class="layerName">{{ item.name }}</div>
