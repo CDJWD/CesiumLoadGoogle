@@ -21,63 +21,11 @@ import GCMercatorTilingScheme from '@/js/GCMercatorTilingScheme';
 
 export default {
     name: "MapDisplay",
+
     data() {
         return {
             cesiumViewer: undefined,
-            layerSet: [{
-                name: "高德地图",
-                url: "http://117.139.234.248:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImage&tilematrix={z}&tilecol={x}&tilerow={y}",
-                type: 3,
-                jump: false,
-                state: true,
-                tileset: null
-            }, {
-                name: "全球矢量地图",
-                url: "streets-v11.json",
-                type: 1,
-                jump: false,
-                state: false,
-                tileset: null
-            }, {
-                name: "台中-17",
-                url: "http://map.earthg.cn:7001/OBJ/台中-17/tileset.json",
-                type: 2,
-                jump: true,
-                state: false,
-                tileset: null
-            },
-            {
-                name: "肖家沟斗渠前段",
-                url: "http://map.earthg.cn:7001/OBJ/东部渠道3dtiles/20240520肖家沟斗渠前段/tileset.json",
-                type: 2,
-                jump: true,
-                min: 385,
-                max: 415,
-                heightoffset: 48,
-                state: false,
-                tileset: null
-            },
-            {
-                name: "麻石包",
-                url: "http://map.earthg.cn:7001/OBJ/东部渠道3dtiles/麻石包/tileset.json",
-                type: 2,
-                jump: true,
-                min: 384.32,
-                max: 427.45,
-                heightoffset: 48,
-                state: false,
-                tileset: null
-            }, {
-                name: "肖家沟斗渠",
-                url: "http://map.earthg.cn:7001/OBJ/东部渠道3dtiles/肖家沟斗渠wgs84utm48/tileset.json",
-                type: 2,
-                jump: true,
-                min: 373.61,
-                max: 422.02,
-                heightoffset: 48,
-                state: false,
-                tileset: null
-            }],
+            layerSet:[],
             mouseCoordinate: {
                 lat: null,
                 lon: null,
@@ -89,20 +37,21 @@ export default {
             tools: [{
                 key: 1,
                 title: "测距离",
-                icon: "tool_measuring_distance.png"
+                icon: "/tool_measuring_distance.png"
             }, {
                 key: 2,
                 title: "测面积",
-                icon: "tool_measuring_area.png"
+                icon: "/tool_measuring_area.png"
             }, {
                 key: 3,
                 title: "清空页面",
-                icon: "tool_clear.png"
+                icon: "/tool_clear.png"
             }, {
                 key: 4,
                 title: "取消测量",
-                icon: "tool_del.png"
+                icon: "/tool_del.png"
             }]
+
         }
     },
     components: {
@@ -111,7 +60,8 @@ export default {
         ContactInformation,
         FloatingToolbar
     },
-    mounted() {
+    async mounted() {
+        this.layerSet = await this.getLayerList();
         this.init();
     },
     methods: {
@@ -178,6 +128,11 @@ export default {
                 }
             })
         },
+        async getLayerList() {
+            const content = await fetch("/layers.json")
+            return await content.json();
+        }
+        ,
         addLayer() {
             for (let index = 0; index < this.layerSet.length; index++) {
                 let element = this.layerSet[index];
@@ -191,10 +146,10 @@ export default {
             }
         },
         addMapboxTitle(element) {
-            MVTImageryProvider.fromUrl('streets-v11.json')
+            MVTImageryProvider.fromUrl('/streets-v11.json')
                 .then(provider => {
                     element.tileset = this.cesiumViewer.imageryLayers.addImageryProvider(provider)
-                    if(!element.state){
+                    if (!element.state) {
                         this.cesiumViewer.imageryLayers.remove(element.tileset, false)
                     }
                 });
@@ -202,13 +157,13 @@ export default {
         addGodeMap(element) {
             let provider = new Cesium.UrlTemplateImageryProvider({
                 url: element.url,
-                tilingScheme: new Cesium.WebMercatorTilingScheme(), 
+                tilingScheme: new Cesium.WebMercatorTilingScheme(),
                 // tilingScheme: new GCMercatorTilingScheme(),
                 maximumLevel: 18, // 根据高德地图的可用级别设置  
                 rectangle: new Cesium.Rectangle(180, 0, 0, 90) // 覆盖全球  
             });
             element.tileset = this.cesiumViewer.imageryLayers.addImageryProvider(provider);
-            if(!element.state){
+            if (!element.state) {
                 this.cesiumViewer.imageryLayers.remove(element.tileset, false)
             }
         },
