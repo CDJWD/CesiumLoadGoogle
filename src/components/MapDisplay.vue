@@ -92,8 +92,10 @@ export default {
             });
             //显示鼠标坐标
             this.cesiumViewer.screenSpaceEventHandler.setInputAction((event) => {
-                let ray = this.cesiumViewer.camera.getPickRay(event.endPosition);
-                let cartesian = this.cesiumViewer.scene.globe.pick(ray, this.cesiumViewer.scene);
+                // let ray = this.cesiumViewer.camera.getPickRay(event.endPosition);
+                // let cartesian = this.cesiumViewer.scene.globe.pick(ray, this.cesiumViewer.scene);
+                var cartesian =   this.cesiumViewer.scene.pickPosition(event.endPosition);
+                // var cartesian = this.cesiumViewer.camera.pickEllipsoid(event.endPosition, this.cesiumViewer.scene.globe.ellipsoid);
                 if (Cesium.defined(cartesian)) {
                     let cartographicPosition = this.cesiumViewer.scene.globe.ellipsoid.cartesianToCartographic(cartesian);
                     this.mouseCoordinate.lat = parseFloat((cartographicPosition.latitude / Math.PI * 180).toFixed(6))
