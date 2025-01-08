@@ -1,7 +1,7 @@
 [
     {
         "name": "高德地图",
-        "url": "http://117.139.234.248:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImage&tilematrix={z}&tilecol={x}&tilerow={y}",
+        "url": "http://map.earthg.cn:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImageCover&tilematrix={z}&tilecol={x}&tilerow={y}",
         "type": 3,
         "jump": false,
         "state": true,
@@ -17,7 +17,7 @@
     },
     {
         "name": "台中-17",
-        "url": "http://map.earthg.cn:7001/OBJ/台中-17/tileset.json",
+        "url": "http://map.earthg.cn:7003/台中-17/tileset.json",
         "type": 2,
         "jump": true,
         "state": false,
@@ -25,7 +25,7 @@
     },
     {
         "name": "点云数据",
-        "url": "http://map.earthg.cn:7001/OBJ/东部渠道3dtiles/20240520肖家沟斗渠前段/tileset.json",
+        "url": "http://map.earthg.cn:7003/东部渠道3dtiles/20240520肖家沟斗渠前段/tileset.json",
         "type": 2,
         "jump": true,
         "min": 385,
@@ -36,7 +36,7 @@
     }    ,
     {
         "name": "麻石包",
-        "url": "http://map.earthg.cn:7001/OBJ/东部渠道3dtiles/麻石包/tileset.json",
+        "url": "http://map.earthg.cn:7003/东部渠道3dtiles/麻石包/tileset.json",
         "type": 2,
         "jump": true,
         "min": 384.32,
@@ -48,7 +48,7 @@
     },
     {
         "name": "肖家沟斗渠",
-        "url": "http://map.earthg.cn:7001/OBJ/东部渠道3dtiles/肖家沟斗渠wgs84utm48/tileset.json",
+        "url": "http://map.earthg.cn:7003/东部渠道3dtiles/肖家沟斗渠wgs84utm48/tileset.json",
         "type": 2,
         "jump": true,
         "min": 373.61,

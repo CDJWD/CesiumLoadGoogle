@@ -76,7 +76,7 @@ export default {
                 animation: false,//动画控件
                 geocoder: false, // 搜索控件
                 homeButton: false, // 主页控件
-                terrainProvider: await Cesium.CesiumTerrainProvider.fromUrl("http://hk.earthg.cn:8311/dem?tk=A43D27703BFD4C268A18A6F0AF060927"),
+                terrainProvider: await Cesium.CesiumTerrainProvider.fromUrl("http://map.earthg.cn:8311/dem?tk=A43D27703BFD4C268A18A6F0AF060927"),
                 infoBox: false,
                 sceneModePicker: false,//投影方式按钮
                 baseLayerPicker: false,// 图层选择按钮
@@ -85,7 +85,7 @@ export default {
                 shadows: false,
                 scene3DOnly: false,
                 selectionIndicator: false,
-                baseLayer: new Cesium.ImageryLayer(new GoogleImageryProvider({ baseurl: "http://hk.earthg.cn:8311/getTileImage?x={x}&y={y}&z={z}&tk=A43D27703BFD4C268A18A6F0AF060927", addone: true }))
+                baseLayer: new Cesium.ImageryLayer(new GoogleImageryProvider({ baseurl: "http://map.earthg.cn:8311/getTileImage?x={x}&y={y}&z={z}&tk=A43D27703BFD4C268A18A6F0AF060927", addone: true }))
             });
             this.cesiumViewer.camera.setView({
                 destination: Cesium.Cartesian3.fromDegrees(105.40, 30.67, 3000000.0),
