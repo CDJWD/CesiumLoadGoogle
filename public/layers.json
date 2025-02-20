@@ -1,10 +1,26 @@
 [
     {
-        "name": "高德地图",
-        "url": "http://map.earthg.cn:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImageCover&tilematrix={z}&tilecol={x}&tilerow={y}",
+        "name": "天地图高德混合地图",
+        "url": "https://map.earthg.cn:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=mixtg&tilematrix={z}&tilecol={x}&tilerow={y}",
         "type": 3,
         "jump": false,
         "state": true,
+        "tileset": null
+    },
+    {
+        "name": "高德矢量注记",
+        "url": "https://map.earthg.cn:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImageCover&tilematrix={z}&tilecol={x}&tilerow={y}",
+        "type": 3,
+        "jump": false,
+        "state": false,
+        "tileset": null
+    },
+    {
+        "name": "高德矢量地图",
+        "url": "https://map.earthg.cn:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImage&tilematrix={z}&tilecol={x}&tilerow={y}",
+        "type": 3,
+        "jump": false,
+        "state": false,
         "tileset": null
     },
     {
@@ -16,8 +32,24 @@
         "tileset": null
     },
     {
-        "name": "台中-17",
+        "name": "三维台湾",
         "url": "http://map.earthg.cn:7003/台中-17/tileset.json",
+        "type": 2,
+        "jump": true,
+        "state": false,
+        "tileset": null
+    },
+    {
+        "name": "蒲江三维",
+        "url": "http://preview.wellchy.tech:8091/mapdata/3dtiles/pujiangxian/01/tileset.json",
+        "type": 2,
+        "jump": true,
+        "state": false,
+        "tileset": null
+    },
+    {
+        "name": "武夷山三维",
+        "url": "http://map.earthg.cn:7002/3dtiles/wuyishan/tileset.json",
         "type": 2,
         "jump": true,
         "state": false,

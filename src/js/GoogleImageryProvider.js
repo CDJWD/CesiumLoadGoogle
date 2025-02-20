@@ -1,7 +1,7 @@
 import * as Cesium from "cesium";
 
-export default class GoogleImageryProvider{
-    constructor(option){
+export default class GoogleImageryProvider {
+    constructor(option) {
         this.credit = new Cesium.Credit(option.credit || "", false);
         this.tilingScheme = new Cesium.GeographicTilingScheme({
             numberOfLevelZeroTilesX: 2,
@@ -19,7 +19,7 @@ export default class GoogleImageryProvider{
         this.baseurl = option.baseurl;
         this.needaddone = option.addone;
     }
-    requestImage(x,y,level){
+    requestImage(x, y, level) {
         if (this.needaddone) { x += 1; y += 1; level += 1; }
 
         var tempuri = this.baseurl;
@@ -30,6 +30,7 @@ export default class GoogleImageryProvider{
             y -= height / 4;
         if (tempuri.replace == null)
             tempuri = this.baseurl;
+        window.lastgetlevel = level;
         var url = tempuri.replace("{x}", x);
         url = url.replace("{y}", y);
         url = url.replace("{z}", level);

@@ -12,13 +12,13 @@
 <script>
 import * as Cesium from 'cesium';
 import MVTImageryProvider from 'mvt-imagery-provider';
-import GoogleImageryProvider from '@/js/GoogleImageryProvider'
+import GoogleImageryProvider from '/src/js/GoogleImageryProvider'
 import CoordinateDisplay from './CoordinateDisplay.vue';
 import LayerControl from './LayerControl.vue';
 import ContactInformation from './ContactInformation.vue';
 import FloatingToolbar from './FloatingToolbar.vue';
-import { PolygonDrawer, PolylineDrawer } from '@/js/cesiumMeasure';
-import GCMercatorTilingScheme from '@/js/GCMercatorTilingScheme';
+import { PolygonDrawer, PolylineDrawer } from '/src/js/cesiumMeasure';
+import GCMercatorTilingScheme from '/src/js/GCMercatorTilingScheme';
 import LocalSearch from './localSearch.vue';
 
 export default {
@@ -59,7 +59,7 @@ export default {
     components: {
         CoordinateDisplay,
         LayerControl,
-        LocalSearch ,
+        LocalSearch,
         ContactInformation,
         FloatingToolbar
     },
@@ -69,14 +69,14 @@ export default {
     },
     methods: {
         async init() {
-            Cesium.Ion.defaultAccessToken =
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmNjJjMzY0OS1hZGQxLTRiZmYtYWYwNS03NmIyM2MwMDgwZDAiLCJpZCI6MTIzMTgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NjA4NDQ3Mjd9.OLTL_rs2gAi2R9zoztBHcJPDHnVl2Q7OZxRtZhoCeZE";
+            // Cesium.Ion.defaultAccessToken =
+            //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmNjJjMzY0OS1hZGQxLTRiZmYtYWYwNS03NmIyM2MwMDgwZDAiLCJpZCI6MTIzMTgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NjA4NDQ3Mjd9.OLTL_rs2gAi2R9zoztBHcJPDHnVl2Q7OZxRtZhoCeZE";
             this.cesiumViewer = new Cesium.Viewer('cesiumContainer', {
                 timeline: false, //时间轴控件
                 animation: false,//动画控件
                 geocoder: false, // 搜索控件
                 homeButton: false, // 主页控件
-                terrainProvider: await Cesium.CesiumTerrainProvider.fromUrl("http://map.earthg.cn:8311/dem?tk=A43D27703BFD4C268A18A6F0AF060927"),
+                terrainProvider: await Cesium.CesiumTerrainProvider.fromUrl("https://map.earthg.cn:8311/dem/"),
                 infoBox: false,
                 sceneModePicker: false,//投影方式按钮
                 baseLayerPicker: false,// 图层选择按钮
@@ -85,7 +85,7 @@ export default {
                 shadows: false,
                 scene3DOnly: false,
                 selectionIndicator: false,
-                baseLayer: new Cesium.ImageryLayer(new GoogleImageryProvider({ baseurl: "http://map.earthg.cn:8311/getTileImage?x={x}&y={y}&z={z}&tk=A43D27703BFD4C268A18A6F0AF060927", addone: true }))
+                baseLayer: new Cesium.ImageryLayer(new GoogleImageryProvider({ baseurl: "https://map.earthg.cn:8311/getTileImage?x={x}&y={y}&z={z}", addone: true }))
             });
             this.cesiumViewer.camera.setView({
                 destination: Cesium.Cartesian3.fromDegrees(105.40, 30.67, 3000000.0),
@@ -94,7 +94,7 @@ export default {
             this.cesiumViewer.screenSpaceEventHandler.setInputAction((event) => {
                 // let ray = this.cesiumViewer.camera.getPickRay(event.endPosition);
                 // let cartesian = this.cesiumViewer.scene.globe.pick(ray, this.cesiumViewer.scene);
-                var cartesian =   this.cesiumViewer.scene.pickPosition(event.endPosition);
+                var cartesian = this.cesiumViewer.scene.pickPosition(event.endPosition);
                 // var cartesian = this.cesiumViewer.camera.pickEllipsoid(event.endPosition, this.cesiumViewer.scene.globe.ellipsoid);
                 if (Cesium.defined(cartesian)) {
                     let cartographicPosition = this.cesiumViewer.scene.globe.ellipsoid.cartesianToCartographic(cartesian);
@@ -149,8 +149,41 @@ export default {
                     } else if (element.type === 3) {
                         this.addGodeMap(element)
                     }
+                    else if (element.type == 10) {
+                        this.addKML(element)
+                    }
                 }
             }
+        },
+        async addKML(element) {
+            if (!element.state) {
+                if (element.tileset)
+                    this.cesiumViewer.dataSources.remove(element.tileset)
+            }
+            else {
+                if (element.tileset) {
+                    this.cesiumViewer.dataSources.add(element.tileset);
+                }
+                else {
+                    var kmlDataSource = new Cesium.KmlDataSource();
+                    var viewer = this.cesiumViewer;
+
+                    // 加载并添加到 Viewer
+                    kmlDataSource.load(element.url)
+                        .then(function (dataSource) {
+                            viewer.dataSources.add(kmlDataSource);
+                            // viewer.zoomTo(kmlDataSource)
+                            element.tileset = kmlDataSource;
+                        })
+                        .catch(function (error) {
+                            // 处理加载错误
+                            console.error('Error loading KML file:', error);
+                        });
+
+
+                }
+            }
+
         },
         addMapboxTitle(element) {
             MVTImageryProvider.fromUrl('/streets-v11.json')
@@ -167,7 +200,7 @@ export default {
                 tilingScheme: new Cesium.WebMercatorTilingScheme(),
                 // tilingScheme: new GCMercatorTilingScheme(),
                 maximumLevel: 18, // 根据高德地图的可用级别设置  
-                rectangle: new Cesium.Rectangle(180, 0, 0, 90) // 覆盖全球  
+                // rectangle: new Cesium.Rectangle(180, -90, 0, 90) // 覆盖全球  
             });
             element.tileset = this.cesiumViewer.imageryLayers.addImageryProvider(provider);
             if (!element.state) {
@@ -233,8 +266,12 @@ export default {
             if (!state) {
                 if (element.type == 1 || element.type === 3) {
                     this.cesiumViewer.imageryLayers.remove(element.tileset, false)
-                } else {
+                } else if (element.type == 2) {
                     this.cesiumViewer.scene.primitives.remove(element.tileset)
+                } else if (element.type == 10) {
+                    element.tileset = false;
+                    this.cesiumViewer.dataSources.remove(element.tileset)
+                    console.log("移除KML")
                 }
             } else {
                 if (element.type == 1 || element.type === 3) {
@@ -243,19 +280,28 @@ export default {
                     element.state = true;
                     this.add3DLayer(element);
                 }
+                else if (element.type == 10) {
+                    element.state = true;
+                    this.addKML(element);
+
+                }
             }
             element.state = state
         },
         layerJumpHandle(index) {
             let element = this.layerSet[index];
             if (element.state) {
+                if (!element.tileset) {
+                    alert("tartget not find")
+                    return;
+                }
+
                 this.cesiumViewer.zoomTo(element.tileset).then(res => {
                     if (res) {
                         console.log("跳转成功")
                     } else {
                         console.log("跳转失败")
                     }
-                    console.log(res)
                 })
             }
         },
