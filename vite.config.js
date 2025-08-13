@@ -5,6 +5,7 @@ import cesium from 'vite-plugin-cesium';
 export default defineConfig({
   plugins: [cesium(), vue()],
   build: {
+    sourcemap:true,
     rollupOptions: {
       input: {
         main: 'index.html', // 默认入口

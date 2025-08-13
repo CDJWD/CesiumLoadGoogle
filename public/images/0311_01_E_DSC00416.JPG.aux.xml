@@ -1,0 +1,50 @@
+<PAMDataset>
+  <Metadata domain="IMAGE_STRUCTURE">
+    <MDI key="SOURCE_COLOR_SPACE">YCbCr</MDI>
+    <MDI key="INTERLEAVE">PIXEL</MDI>
+    <MDI key="COMPRESSION">JPEG</MDI>
+  </Metadata>
+  <Metadata domain="Esri">
+    <MDI key="PyramidResamplingType">NEAREST</MDI>
+  </Metadata>
+  <Metadata domain="xml:ESRI" format="xml">
+    <GeodataXform xsi:type="typens:PolynomialXform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:typens="http://www.esri.com/schemas/ArcGIS/10.1">
+      <PolynomialOrder>1</PolynomialOrder>
+      <SpatialReference xsi:type="typens:ProjectedCoordinateSystem">
+        <WKT>PROJCS[&quot;CGCS2000_3_degree_Gauss_Kruger_CM_102E&quot;,GEOGCS[&quot;GCS_China_Geodetic_Coordinate_System_2000&quot;,DATUM[&quot;D_unknown&quot;,SPHEROID[&quot;unretrievable_using_WGS84&quot;,6378137.0,298.257223563]],PRIMEM[&quot;Greenwich&quot;,0.0],UNIT[&quot;Degree&quot;,0.0174532925199433]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;false_easting&quot;,500000.0],PARAMETER[&quot;false_northing&quot;,0.0],PARAMETER[&quot;central_meridian&quot;,102.0],PARAMETER[&quot;scale_factor&quot;,1.0],PARAMETER[&quot;latitude_of_origin&quot;,0.0],UNIT[&quot;Meter&quot;,1.0]]</WKT>
+        <XOrigin>-5685314.2701774482</XOrigin>
+        <YOrigin>-10915280.447652476</YOrigin>
+        <XYScale>412595869.52152699</XYScale>
+        <ZOrigin>-100000</ZOrigin>
+        <ZScale>10000</ZScale>
+        <MOrigin>-100000</MOrigin>
+        <MScale>10000</MScale>
+        <XYTolerance>0.001</XYTolerance>
+        <ZTolerance>0.001</ZTolerance>
+        <MTolerance>0.001</MTolerance>
+        <HighPrecision>true</HighPrecision>
+      </SpatialReference>
+      <CoeffX xsi:type="typens:ArrayOfDouble">
+        <Double>589486.63261773635</Double>
+        <Double>-0.024982091021809486</Double>
+        <Double>0.0022715782083222893</Double>
+      </CoeffX>
+      <CoeffY xsi:type="typens:ArrayOfDouble">
+        <Double>2975134.8169802572</Double>
+        <Double>-0.0022715782083222893</Double>
+        <Double>-0.024982091021809486</Double>
+      </CoeffY>
+      <InverseCoeffX xsi:type="typens:ArrayOfDouble">
+        <Double>34142789.125498258</Double>
+        <Double>-39.700433725869665</Double>
+        <Double>-3.6098915832905596</Double>
+      </InverseCoeffX>
+      <InverseCoeffY xsi:type="typens:ArrayOfDouble">
+        <Double>115986159.793503</Double>
+        <Double>3.6098915832905623</Double>
+        <Double>-39.700433725869658</Double>
+      </InverseCoeffY>
+      <Name />
+    </GeodataXform>
+  </Metadata>
+</PAMDataset>

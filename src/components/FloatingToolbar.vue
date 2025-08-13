@@ -31,7 +31,7 @@ export default {
 <style>
 .tools {
     position: absolute;
-    top: 50px;
+    top: 10px;
     right: 50px;
     height: 50px;
     z-index: 99;

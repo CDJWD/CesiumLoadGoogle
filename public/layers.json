@@ -1,15 +1,7 @@
 [
     {
-        "name": "天地图高德混合地图",
-        "url": "https://map.earthg.cn:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=mixtg&tilematrix={z}&tilecol={x}&tilerow={y}",
-        "type": 3,
-        "jump": false,
-        "state": true,
-        "tileset": null
-    },
-    {
         "name": "高德矢量注记",
-        "url": "https://map.earthg.cn:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImageCover&tilematrix={z}&tilecol={x}&tilerow={y}",
+        "url": "http://117.172.255.147:8312/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImageCover&tilematrix={z}&tilecol={x}&tilerow={y}",
         "type": 3,
         "jump": false,
         "state": false,
@@ -17,77 +9,37 @@
     },
     {
         "name": "高德矢量地图",
-        "url": "https://map.earthg.cn:8311/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImage&tilematrix={z}&tilecol={x}&tilerow={y}",
+        "url": "http://117.172.255.147:8312/wmts?request=gettile&tilematrixset=wholeworld_crs_3857&layer=GaoDeElectronicImage&tilematrix={z}&tilecol={x}&tilerow={y}",
         "type": 3,
         "jump": false,
         "state": false,
         "tileset": null
     },
+   
     {
-        "name": "全球矢量地图",
-        "url": "streets-v11.json",
-        "type": 1,
+        "name": "三维演示",
+        "type": 22,
         "jump": false,
         "state": false,
-        "tileset": null
-    },
-    {
-        "name": "三维台湾",
-        "url": "http://map.earthg.cn:7003/台中-17/tileset.json",
-        "type": 2,
-        "jump": true,
-        "state": false,
-        "tileset": null
-    },
-    {
-        "name": "蒲江三维",
-        "url": "http://preview.wellchy.tech:8091/mapdata/3dtiles/pujiangxian/01/tileset.json",
-        "type": 2,
-        "jump": true,
-        "state": false,
-        "tileset": null
-    },
-    {
-        "name": "武夷山三维",
-        "url": "http://map.earthg.cn:7002/3dtiles/wuyishan/tileset.json",
-        "type": 2,
-        "jump": true,
-        "state": false,
-        "tileset": null
-    },
-    {
-        "name": "点云数据",
-        "url": "http://map.earthg.cn:7003/东部渠道3dtiles/20240520肖家沟斗渠前段/tileset.json",
-        "type": 2,
-        "jump": true,
-        "min": 385,
-        "max": 415,
-        "heightoffset": 48,
-        "state": false,
-        "tileset": null
-    }    ,
-    {
-        "name": "麻石包",
-        "url": "http://map.earthg.cn:7003/东部渠道3dtiles/麻石包/tileset.json",
-        "type": 2,
-        "jump": true,
-        "min": 384.32,
-        "max": 427.45,
-        "heightoffset": 48,
-        "state": false,
-        "tileset": null,
-        "hidden":true
-    },
-    {
-        "name": "肖家沟斗渠",
-        "url": "http://map.earthg.cn:7003/东部渠道3dtiles/肖家沟斗渠wgs84utm48/tileset.json",
-        "type": 2,
-        "jump": true,
-        "min": 373.61,
-        "max": 422.02,
-        "heightoffset": 48,
-        "state": false,
-        "tileset": null,
-        "hidden":true
+        "children": [
+            {
+                "name": "三维台湾",
+                "url": "http://117.172.255.147:7002/台中-17/tileset.json",
+                "type": 2,
+                "jump": true,
+                "state": false,
+                "tileset": null
+            },
+            {
+                "name": "澳门",
+                "url": "http://117.172.255.147:7002/aomen/tileset.json",
+                "type": 2,
+                "jump": true,
+                "state": false,
+                "heightoffset": 0.0,
+                "tileset": null
+            }
+        ]
     }
+   
 ]

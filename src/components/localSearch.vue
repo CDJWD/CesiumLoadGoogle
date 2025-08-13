@@ -31,20 +31,25 @@ export default {
         getPolygonBounds(polygonHierarchy) {
             let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
 
-            polygonHierarchy.positions.forEach(cartesian => {
+            console.log('计算多边形边界，位置数量:', polygonHierarchy.positions.length);
+
+            polygonHierarchy.positions.forEach((cartesian, index) => {
                 const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
                 const lon = Cesium.Math.toDegrees(cartographic.longitude);
                 const lat = Cesium.Math.toDegrees(cartographic.latitude);
+                console.log(`位置 ${index}: 经度=${lon}, 纬度=${lat}`);
                 if (lon < minLon) minLon = lon;
                 if (lon > maxLon) maxLon = lon;
                 if (lat < minLat) minLat = lat;
                 if (lat > maxLat) maxLat = lat;
             });
 
-            return { minLon, maxLon, minLat, maxLat };
+            const bounds = { minLon, maxLon, minLat, maxLat };
+            console.log('计算出的边界:', bounds);
+            return bounds;
         }
         ,
-        search_clear(){
+        search_clear() {
             clearSearchResult();
 
         },
@@ -53,7 +58,7 @@ export default {
                 this.search_online();
                 return;
             }
-            var serverurl = 'http://map.earthg.cn:8311/search?key=';
+            var serverurl = 'https://map.earthg.cn:8311/search?key=';
             serverurl += this.query;
             const resultDiv = document.getElementById('result');
             fetch(serverurl).then(async (response) => {
@@ -112,6 +117,13 @@ export default {
             })
         },
         resultClik_online(sender) {
+            // 检查Viewer对象是否存在
+            if (!this.Viewer) {
+                console.error('Viewer对象未定义');
+                alert('Viewer对象未正确初始化');
+                return;
+            }
+            
             if (this.lastDraw) {
                 this.Viewer.entities.remove(this.lastDraw);
                 this.lastDraw = undefined;
@@ -138,7 +150,7 @@ export default {
                 this.lastDraw = this.Viewer.entities.add({
                     polygon: {
                         hierarchy: PolygonHierarchy,  // 设置多边形的边界
-                        material: new Cesium.ColorMaterialProperty(Cesium.Color.TRANSPARENT.withAlpha(0.3)),  // 设置透明的填充
+                        material: new Cesium.ColorMaterialProperty(Cesium.Color.RED.withAlpha(0.5)),  // 改为红色半透明，更容易看见
                         outline: true,  // 启用边框
                         outlineColor: Cesium.Color.RED,  // 设置边框颜色为红色
                         outlineWidth: 3,  // 设置边框宽度
@@ -148,6 +160,11 @@ export default {
                         clampToGround: true  // 使其贴合地面
                     }
                 });
+                
+                // 添加调试信息
+                console.log('多边形已添加:', this.lastDraw);
+                console.log('多边形层次结构:', PolygonHierarchy);
+                
                 // 4. 计算多边形的边界 (最小/最大经纬度)
 
                 // 获取多边形的边界
@@ -164,13 +181,16 @@ export default {
             }
         },
         search_online() {
-            var apiKey = "26a78a177ac493846d49c3aa786f0341";
+            var apiKey = "请配置您的高德APIKey";
             const resultDiv = document.getElementById('result');
+            if (apiKey === "请配置您的高德APIKey") {
+                alert("请配置您的高德APIKey");
+                return;
+            }
 
             fetch(`https://restapi.amap.com/v3/place/text?key=${apiKey}&keywords=${encodeURIComponent(this.query)}&output=JSON`)
                 .then(response => response.json())
                 .then(data => {
-
                     if (data.status === '1' && data.pois && data.pois.length > 0) {
                         resultDiv.innerHTML = '';
                         resultDiv.style.visibility = 'visible';
@@ -187,13 +207,9 @@ export default {
                             const address = document.createElement('p');
                             address.textContent = `地址: ${item.address}`;
 
-                            // const location = document.createElement('p');
-                            // location.textContent = `经纬度: ${item.location}`;
-
                             // 将信息添加到每个搜索项中
                             resultItem.appendChild(link);
                             resultItem.appendChild(address);
-                            // resultItem.appendChild(location);
                             // 将搜索项添加到结果区域
                             resultDiv.appendChild(resultItem);
                         });
